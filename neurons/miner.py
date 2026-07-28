@@ -175,8 +175,9 @@ class Miner(BaseMinerNeuron):
             implementation_files=[
                 ROOT / "neurons" / "miner.py",
                 ROOT / "detector" / "inference.py",
-                ROOT / "detector" / "coherent_features.py",
-                ROOT / "detector" / "coherence.py",
+                ROOT / "detector" / "features.py",
+                ROOT / "detector" / "feature_policy.py",
+                ROOT / "detector" / "signature.py",
                 ROOT / "detector" / "luck.py",
                 ROOT / "detector" / "live_capture.py",
                 ROOT / "detector" / "artifacts" / "meta.json",
@@ -216,8 +217,8 @@ class Miner(BaseMinerNeuron):
             f"Poker44 miner ready | version={meta.get('model_version', '?')} "
             f"artifact={str(meta.get('artifact_sha256', ''))[:12]} "
             f"features={meta.get('feature_count')} "
-            f"luck_weight={meta.get('luck_weight')} "
-            f"threshold={meta.get('deploy_threshold')} | "
+            f"sig_w={meta.get('sig_weight')} luck_w={meta.get('luck_weight')} "
+            f"scale_norm={meta.get('scale_norm')} | "
             f"offline reward={_offline(meta, 'reward'):.4f} "
             f"ap={_offline(meta, 'ap'):.4f} (benchmark-only; does not predict live)")
         bt.logging.info(

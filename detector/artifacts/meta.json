@@ -1,40 +1,83 @@
 {
   "model": "Poker44 behavioural bot detector",
-  "variant": "v6-coherent-luck",
-  "model_version": "20260728-093857",
-  "trained_at_utc": "2026-07-28T09:38:57Z",
-  "artifact_sha256": "3993de1500c4c74bf3d7a704c772442318801674811a5d7074362ec132453618",
-  "deploy_threshold": 0.3068839322172027,
-  "luck_weight": 0.4,
-  "luck_grid": [
-    [
-      0.0,
-      0.9544615041918968
-    ],
-    [
-      0.1,
-      0.9514405176627029
-    ],
-    [
-      0.2,
-      0.9507440593078305
-    ],
-    [
-      0.3,
-      0.9454712077369481
-    ],
-    [
-      0.4,
-      0.9448261906749688
-    ]
-  ],
+  "variant": "v6-monoguard-signature-luck",
+  "model_version": "20260728-103459",
+  "trained_at_utc": "2026-07-28T10:34:59Z",
+  "artifact_sha256": "0c376c8f864e6ea442607bb4456452fa97a598bcafabaab7e15d926369d9e0bf",
+  "deploy_threshold": 0.39111154930405484,
+  "sig_weight": 0.2,
   "max_pos_frac": 0.05,
-  "feature_count": 1102,
-  "feature_schema_sha256": "6e96e2eb79c2f455f5778f4ccf081ccf43b420c54fb033468df49a219ee380e5",
-  "feature_source": "poker44-first coherent+ngram schema (MIT); no absolute-currency features",
-  "luck_source": "code-seqsig-rw-detector-4 luck_detector T4-RW (MIT); zero fitted parameters",
-  "holdout_days": 6,
-  "selection_train_dates": [
+  "feature_count": 236,
+  "feature_schema_sha256": "2dffb94809b093300f6b88033b9453cbf898272483584699210e7d13b995c769",
+  "scale_norm": true,
+  "feature_policy": {
+    "policy": "poker44-drift-v1",
+    "enabled": true,
+    "total": 293,
+    "kept": 236,
+    "dropped": 57,
+    "dropped_features": [
+      "hand_count",
+      "pv_button_action_share_max",
+      "pv_button_action_share_mean",
+      "pv_button_action_share_min",
+      "pv_button_action_share_q10",
+      "pv_button_action_share_q50",
+      "pv_button_action_share_q90",
+      "pv_button_action_share_std",
+      "pv_hero_action_share_max",
+      "pv_hero_action_share_mean",
+      "pv_hero_action_share_min",
+      "pv_hero_action_share_q10",
+      "pv_hero_action_share_q50",
+      "pv_hero_action_share_q90",
+      "pv_hero_action_share_std",
+      "pv_hero_button_same_max",
+      "pv_hero_button_same_mean",
+      "pv_hero_button_same_min",
+      "pv_hero_button_same_q10",
+      "pv_hero_button_same_q50",
+      "pv_hero_button_same_q90",
+      "pv_hero_button_same_std",
+      "pv_player_count_max",
+      "pv_player_count_mean",
+      "pv_player_count_min",
+      "pv_player_count_q10",
+      "pv_player_count_q50",
+      "pv_player_count_q90",
+      "pv_player_count_std",
+      "pv_seat_utilization_max",
+      "pv_seat_utilization_mean",
+      "pv_seat_utilization_min",
+      "pv_seat_utilization_q10",
+      "pv_seat_utilization_q50",
+      "pv_seat_utilization_q90",
+      "pv_seat_utilization_std",
+      "pvrel_starting_stack_iqr_max",
+      "pvrel_starting_stack_iqr_mean",
+      "pvrel_starting_stack_iqr_min",
+      "pvrel_starting_stack_iqr_q10",
+      "pvrel_starting_stack_iqr_q50",
+      "pvrel_starting_stack_iqr_q90",
+      "pvrel_starting_stack_iqr_std",
+      "pvrel_starting_stack_mean_max",
+      "pvrel_starting_stack_mean_mean",
+      "pvrel_starting_stack_mean_min",
+      "pvrel_starting_stack_mean_q10",
+      "pvrel_starting_stack_mean_q50",
+      "pvrel_starting_stack_mean_q90",
+      "pvrel_starting_stack_mean_std",
+      "pvrel_starting_stack_std_max",
+      "pvrel_starting_stack_std_mean",
+      "pvrel_starting_stack_std_min",
+      "pvrel_starting_stack_std_q10",
+      "pvrel_starting_stack_std_q50",
+      "pvrel_starting_stack_std_q90",
+      "pvrel_starting_stack_std_std"
+    ]
+  },
+  "holdout_days": 12,
+  "train_dates": [
     "2026-05-26",
     "2026-05-27",
     "2026-05-28",
@@ -86,18 +129,145 @@
     "2026-07-13",
     "2026-07-14",
     "2026-07-15",
-    "2026-07-16",
-    "2026-07-17",
-    "2026-07-18",
-    "2026-07-19",
-    "2026-07-20",
-    "2026-07-21",
-    "2026-07-22"
+    "2026-07-16"
   ],
   "offline_holdout": {
-    "reward": 0.9448261906749688,
-    "ap": 0.9661700685951491,
-    "recall": 0.8555555555555556
+    "reward": 0.9205658648060367,
+    "ap": 0.9546624497626703,
+    "note": "benchmark-only; does not predict live reward"
   },
-  "offline_note": "benchmark-only; this family measured 0.92-0.99 offline against 0.53-0.58 live"
+  "weight_grid": [
+    {
+      "w_sig": 0.0,
+      "w_luck": 0.0,
+      "reward": 0.9300606230879586,
+      "ap": 0.9619935184197647
+    },
+    {
+      "w_sig": 0.0,
+      "w_luck": 0.1,
+      "reward": 0.9288061841310448,
+      "ap": 0.9613080830122916
+    },
+    {
+      "w_sig": 0.0,
+      "w_luck": 0.2,
+      "reward": 0.9296977572244735,
+      "ap": 0.9603165734363839
+    },
+    {
+      "w_sig": 0.0,
+      "w_luck": 0.3,
+      "reward": 0.9247503273173824,
+      "ap": 0.9586292444339547
+    },
+    {
+      "w_sig": 0.1,
+      "w_luck": 0.0,
+      "reward": 0.9294918399984288,
+      "ap": 0.9613146672826929
+    },
+    {
+      "w_sig": 0.1,
+      "w_luck": 0.1,
+      "reward": 0.9294030334727178,
+      "ap": 0.9604061825928586
+    },
+    {
+      "w_sig": 0.1,
+      "w_luck": 0.2,
+      "reward": 0.9279479251297663,
+      "ap": 0.9590437612403262
+    },
+    {
+      "w_sig": 0.1,
+      "w_luck": 0.3,
+      "reward": 0.9210026772926495,
+      "ap": 0.9569020593454586
+    },
+    {
+      "w_sig": 0.2,
+      "w_luck": 0.0,
+      "reward": 0.9285027247782603,
+      "ap": 0.9602032910597122
+    },
+    {
+      "w_sig": 0.2,
+      "w_luck": 0.1,
+      "reward": 0.9272994574956742,
+      "ap": 0.9590543506087588
+    },
+    {
+      "w_sig": 0.2,
+      "w_luck": 0.2,
+      "reward": 0.9232470392111324,
+      "ap": 0.9572449323769484
+    },
+    {
+      "w_sig": 0.2,
+      "w_luck": 0.3,
+      "reward": 0.9205658648060367,
+      "ap": 0.9546624497626703
+    },
+    {
+      "w_sig": 0.3,
+      "w_luck": 0.0,
+      "reward": 0.9281095474168773,
+      "ap": 0.9585738621848671
+    },
+    {
+      "w_sig": 0.3,
+      "w_luck": 0.1,
+      "reward": 0.9259280395879553,
+      "ap": 0.9569993677668289
+    },
+    {
+      "w_sig": 0.3,
+      "w_luck": 0.2,
+      "reward": 0.9225629115136825,
+      "ap": 0.9548381322751176
+    },
+    {
+      "w_sig": 0.3,
+      "w_luck": 0.3,
+      "reward": 0.915520393250108,
+      "ap": 0.9515703261203154
+    },
+    {
+      "w_sig": 0.4,
+      "w_luck": 0.0,
+      "reward": 0.9259570905469124,
+      "ap": 0.9561506934880728
+    },
+    {
+      "w_sig": 0.4,
+      "w_luck": 0.1,
+      "reward": 0.9216501732284134,
+      "ap": 0.954157814590645
+    },
+    {
+      "w_sig": 0.4,
+      "w_luck": 0.2,
+      "reward": 0.9136144265225569,
+      "ap": 0.9512811329479196
+    },
+    {
+      "w_sig": 0.4,
+      "w_luck": 0.3,
+      "reward": 0.9080961419914267,
+      "ap": 0.9469390395197581
+    }
+  ],
+  "weight_tiebreak": {
+    "tolerance": 0.01,
+    "offline_argmax": [
+      0.0,
+      0.0
+    ],
+    "selected": [
+      0.2,
+      0.3
+    ],
+    "degenerate": true
+  }
 }
