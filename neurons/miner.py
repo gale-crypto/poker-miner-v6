@@ -36,8 +36,8 @@ from poker44.validator.synapse import DetectionSynapse
 from detector import live_capture
 from detector.inference import get_model
 
-MODEL_NAME = os.environ.get("POKER44_MODEL_NAME", "poker44-miner-v5")
-MODEL_VERSION = os.environ.get("POKER44_MODEL_VERSION", "5.0.0")
+MODEL_NAME = os.environ.get("POKER44_MODEL_NAME", "poker44-miner-v6")
+MODEL_VERSION = os.environ.get("POKER44_MODEL_VERSION", "6.0.0")
 ARTIFACT = ROOT / "detector" / "artifacts" / "model.joblib"
 
 
@@ -147,22 +147,6 @@ def _fallback_scores(chunks) -> list:
     return scores
 
 
-def _policy_enabled(meta) -> object:
-    """Drift-policy state, whichever meta.json layout this build wrote.
-
-    v4 records one policy report; v5 records one per feature view. Read both
-    rather than assuming, so a schema change downgrades the log line instead of
-    silently reporting None.
-    """
-    policy = meta.get("feature_policy") or {}
-    if "enabled" in policy:
-        return policy["enabled"]
-    for value in policy.values():
-        if isinstance(value, dict) and "enabled" in value:
-            return value["enabled"]
-    return None
-
-
 def _offline(meta, key: str) -> float:
     """Offline holdout metric. Benchmark-only -- it does NOT predict live reward
     (this family measured 0.93 offline against 0.53 live), so it is logged for
@@ -191,7 +175,9 @@ class Miner(BaseMinerNeuron):
             implementation_files=[
                 ROOT / "neurons" / "miner.py",
                 ROOT / "detector" / "inference.py",
-                ROOT / "detector" / "features.py",
+                ROOT / "detector" / "coherent_features.py",
+                ROOT / "detector" / "coherence.py",
+                ROOT / "detector" / "luck.py",
                 ROOT / "detector" / "live_capture.py",
                 ROOT / "detector" / "artifacts" / "meta.json",
             ],
@@ -230,8 +216,8 @@ class Miner(BaseMinerNeuron):
             f"Poker44 miner ready | version={meta.get('model_version', '?')} "
             f"artifact={str(meta.get('artifact_sha256', ''))[:12]} "
             f"features={meta.get('feature_count')} "
-            f"scale_norm={meta.get('scale_norm')} "
-            f"drift_policy={_policy_enabled(meta)} | "
+            f"luck_weight={meta.get('luck_weight')} "
+            f"threshold={meta.get('deploy_threshold')} | "
             f"offline reward={_offline(meta, 'reward'):.4f} "
             f"ap={_offline(meta, 'ap'):.4f} (benchmark-only; does not predict live)")
         bt.logging.info(
